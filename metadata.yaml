@@ -1,0 +1,25 @@
+_repo: Garrison-s-Finish--A-Romance-of-the-Race-Course_2989
+_version: 0.0.1
+creator:
+  author:
+    agent_name: Ferguson, W. B. M. (William Blair Morton)
+    alias: Ferguson, William Blair Morton
+    birthdate: 1882
+    deathdate: 1967
+    gutenberg_agent_id: '1077'
+    url: http://www.gutenberg.org/2009/agents/1077
+description: ''
+gutenberg_issued: '2006-03-31'
+gutenberg_type: Text
+identifiers:
+  gutenberg: '2989'
+language: en
+publisher: Project Gutenberg
+rights: Public domain in the USA.
+rights_url: http://creativecommons.org/about/pdm
+subjects:
+- !lcsh 'Horse racing -- Fiction'
+- !lcc 'PS'
+- GITenberg
+title: 'Garrison''s Finish: A Romance of the Race Course'
+url: http://www.gutenberg.org/ebooks/2989
