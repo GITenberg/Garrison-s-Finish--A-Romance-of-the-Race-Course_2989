@@ -1,0 +1,61 @@
+sudo: required
+dist: trusty
+language: ruby
+
+before_install:
+before_install:
+- gem install asciidoctor -v 1.5.2
+- gem install tilt
+- sudo pip install git+https://github.com/gitenberg-dev/gitberg
+- sudo pip install pillow
+- sudo pip install cssutils
+- sudo pip install docutils
+- sudo pip install roman
+- sudo pip install git+https://github.com/gitenberg-dev/pg-epubmaker
+script:
+- VERSION=`ruby -e "require 'yaml'; meta = YAML.load_file('metadata.yaml'); puts meta['_version'];"`
+- git clone https://github.com/gitenberg-dev/asciidoctor-htmlbook.git
+- sudo pip install -r asciidoctor-htmlbook/gitberg-machine/requirements.txt
+
+- /usr/bin/python -c "from gitenberg import travis; travis.build_epub()"
+- ebook-convert book.epub book.mobi
+- xvfb-run ebook-convert book.epub book.pdf
+branches:
+  only:
+  - master
+notifications:
+  webhooks:
+    urls:
+      - https://unglue.it/api/travisci/webhook
+    on_success: always
+    on_failure: never
+    on_start: never
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: T1uSZaIUXYQEm3/DFj/yrCt2Prr5KKgQBd7MJzZS7aXpaXnOwxHvbVFn7AWCpWFFOVh41UAkweBmxUc7IrH/4DhcsyGz4yRLtLoiOM60tdO/tDkV/ezsm0R/VfVR3tJISqfdBNXBUHYWH2TX7YIbRHlWAXXX090wZuUE2aKLJr+ZZUZKVo6JlL7ra95SFY0YFJOHa2INJGLx97mKA/Pk/gJvR+dWbTA6DKyg1p6WRqctZq8aiEXDhWqA8N7MhfihxzdJbmXh3EKM/YBkCrUQsZq6/yxufRWuNUUpGvXlo6XBACYY3nua6UNGxugKWCokK0r7TjJ5gKWLEbqTE9hEF+VREeBTQ9Pjtm7KUJPn1bTOaj5tINGInF5jjrlTid5yy9Yf1G/XGBDhhKSD1YEnDIj1SIL3dQ6V/EADho+XgBkuubdA7N4EVZPtmMF+8/y9nu1pLDuZ+7Tu3z77w2Q67BGZBZNr9CWEjQgLRZTzvmhYLqGcU6cqoQuN/r/6Cs3dRvHhf/ADL7pizmVuwdKI59PzfzCXjPhVqECPQ78pXo/APYvB/2B7mUiv9TbOjOhcZUdt6s4qez9XbdmzJoUxm0OifK4Enk3WVp/AAAZI5aV3U1UJdX44lvhpDbmotW9WackPBMRI51YqeTRr5sJBr/i2Wme4m8TzShwb2I3h9eA=
+  file:
+    - book.epub
+    - book.mobi
+    - book.pdf
+  "on":
+    repo: GITenberg/Garrison-s-Finish--A-Romance-of-the-Race-Course_2989
+addons:
+  apt:
+    packages:
+    - xsltproc
+    - xvfb
+    - calibre
+    - python-pip
+    - git
+    - python-dev
+    - libjpeg-dev
+    - libpng-dev
+    - libfreetype6
+    - libfreetype6-dev
+    - zlib1g-dev
+    - python-lxml
+    - libxml2-dev
+    - libxslt1-dev
+    - tidy
